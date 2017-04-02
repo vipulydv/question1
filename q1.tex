@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ right=20mm,
+ top=5mm,
+ bottom=10mm
+ }
+
+\title{ASSIGNMENT 7}
+\author{Vipul Yadav}
+\date{6 March 2017}
+
+\begin{document}
+
+\maketitle
+
+\section{INTRODUCTION}
+\label{sec1}
+
+In this assignment we look at multiplying two digit numbers when they are of the form:
+\begin{itemize}[leftmargin=\dimexpr\parindent+0\labelwidth\relax]
+     \item The first digits are same, and the last ones add up to 10.
+     \item The first digits add up to 10, and the last ones are same.
+\end{itemize}
+To know more about this method refer \cite{vedic}, \cite{florentinwebsite} and \cite{commentry}
+
+\section{The first digits are same, and the last ones add up to 10}
+\label{sec2}
+The following example follows the above condition\footnote{The first digits are same, and the last ones add up to 10}.
+
+\subsection{How to compute the result mentally?}
+\label{subsec1}
+
+Here, we see that the first digits of given numbers are same, and the last digits add up to 10.So,to get the answer numbers we follow these steps:
+\begin{itemize}[leftmargin=\dimexpr\parindent+0\labelwidth\relax]
+     \item Step 1: Multiply the first digits which are same with its successor (i.e. 6*7 in the given example) and let the answer be a1.
+     \item Step 2: Multiply the right part of the numbers which are not same (i.e. 6*4 in the given example) and let the answer be a2.
+     \item Step 3: The final answer is a1 followed by a2 (i.e. 4224)
+\end{itemize}
+
+
+\subsection{Pseudocode for this algorithm.}
+\label{subsec2}
+\begin{algorithm}
+   \caption{Vedic Multiplication}
+    \begin{algorithmic}[h]
+      \Function{Mult}{$X,Y$}
+
+        \State $i \gets units \thinspace place \thinspace of \thinspace X $
+        \State $j \gets units \thinspace place \thinspace of \thinspace Y $
+        \State $k \gets tens \thinspace place \thinspace of \thinspace X $
+        \State $l \gets i*j$
+        \State $m \gets k*(k+1)$
+        \newline
+        \Return $(100*m)+l$
+       \EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Why is this method easier and faster?}
+\label{subsec3}
+This method is much more faster than normal two digit multiplication as it involves only 2 multiplication steps whereas in normal multiplication we have to add 4 times and multiply 4 times.
+\newline
+
+\begin{center}
+{\begin{tabular}{| p{3cm} | p{4cm} | p{4cm} |}
+\hline
+Method & 1 digit Multiplications & Additions \\
+\hline
+Vedic Math  & \textit{2}  & 0  \\
+
+\hline
+
+Traditional Algebra          &  4         & 4   \\
+
+\hline
+\end{tabular}
+}
+\end{center}
+
+
+\subsection{Why does this method work?}
+\label{subsec4}
+Suppose a pair of two digit numbers X and Y have the same first digit $x$ and their last digits sum to 10. We can write X and Y as
+
+\begin{align}
+    Y&=10x+(10-y) \\
+    X*Y&=(10x+y)*(10x+(10-y)) \\
+    X*Y&=100x^2+10x(10-y)+10xy+(10-y)y \\
+    X*Y&=100x^2+100x+10y-y^2 \\
+    X*Y&=100x(x+1)+y(10-y)
+\end{align}
+The first part of this expression, $100x(x+1)$ is the first two digits of the product. The factor of 100 makes the product $x(x+1)$ occur two places before the decimal point. The last part of this expression, $y(10-y)$,is the product of the last two digits of X and Y. Putting both pieces together gives us the product of X and Y.
+
+\subsection{Generalization of this method}
+\label{subsec5}
+The idea for generalization is inspired from 3 digit number multiplication as given on \href{http://www.vedantatree.com/2012/05/vedic-math-multiplication-of-numbers.html}{this} website.
+Suppose a pair of two digit numbers X and Y have $n$ digits each and let the first $m$ digits of these numbers be same and the sum of next $n-m$ digits be $10^{n-m}$ then to get the product of these numbers, the following procedure is to be used which is similar to \ref{subsec1}.
+\begin{itemize}[leftmargin=\dimexpr\parindent+0\labelwidth\relax]
+     \item Step 1: Multiply the left part of the number(i.e. the part which is common to both the numbers) with its successor and let the answer be a1.
+     \item Step 2: Multiply the right part of the numbers which are not same  and let the answer be a2.
+     \item Step 3: The final answer is a1 followed by a2 (where a2 takes $n-m+1$ places before decimal).
+\end{itemize}
+
+\section{The first digits add up to 10, and the last ones are same.}
+\label{sec3}
+The following example follows the above condition\footnote{The first digits add up to 10, and the last ones are same.}
+
+\subsection{How to compute the result mentally?}
+\label{subsec6}
+Here, we see that the first digits of given numbers are same, and the last digits add up to 10.So,to get the answer numbers we follow these steps:
+\begin{itemize}[leftmargin=\dimexpr\parindent+0\labelwidth\relax]
+     \item Step 1: Multiply the first digits which are not same and add the number which is same to these numbers to the result (i.e. (6*4)+6 in the given example) and let the answer be a1.
+     \item Step 2: Multiply the right part of the numbers which is same (i.e. 6*6 in the given example) and let the answer be a2.
+     \item Step 3: The final answer is a1 followed by a2 (i.e. 3036)
+\end{itemize}
+
+\subsection{Pseudocode for this algorithm.}
+\label{subsec7}
+\begin{algorithm}
+   \caption{Vedic Multiplication}
+    \begin{algorithmic}[h]
+      \Function{Mult}{$X,Y$}
+
+        \State $i \gets units \thinspace place \thinspace of \thinspace X $
+        \State $j \gets tens \thinspace place \thinspace of \thinspace X $
+        \State $k \gets tens \thinspace place \thinspace of \thinspace Y $
+        \State $l \gets (j*k)+i$
+        \State $m \gets i^2$
+        \newline
+        \Return $100l+m$
+       \EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\end{document}
